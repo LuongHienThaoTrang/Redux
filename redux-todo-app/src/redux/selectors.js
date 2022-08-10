@@ -5,7 +5,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 // Lấy ra state
-export const todoListSelector = state => state.todoList
+export const todoListSelector = state => state.todoList.todos
 export const searchTextSelector = state => state.filters.search 
 export const statusFilterSelector = state => state.filters.status
 export const prioriryFilterSelector = state => state.filters.prioriry 
@@ -20,11 +20,10 @@ export const todosRemainingSelector = createSelector(
 
     //**** Khi viết redux toolkit: thì những giá trị tham số trong callback nếu có sự thay đổi mới bị tính toán lại như react hook
     (todoList, searchText, statusFilter, prioriryFilter) => {
-        
         // Dữ liệu của status có 3 giá trị: 'All', 'Completed', 'Todo'
         // 1. Kiểm tra: nếu là 'All' => Thì không xét đk completed
         // 2. Kiểm tra: nếu là 'Completed' or 'Todo' => Thì xét đk completed
-        return todoList.filter(todo => {
+        return todoList && todoList.filter(todo => {
             if (statusFilter === 'All') {
                 // Lúc đầu prioriryFilter là [] nên nó sẽ chạy đk 2
                 // Nếu có phần tử thì chạy đk đầu
@@ -39,9 +38,7 @@ export const todosRemainingSelector = createSelector(
                 (statusFilter === 'Completed' ? todo.completed === true : todo.completed === false) &&
                 (prioriryFilter.length > 0 ? todo.name.includes(searchText) && prioriryFilter.includes(todo.prioriry) : todo.name.includes(searchText))
 
-            )
-
-            
+            )     
         })
     }  
 )

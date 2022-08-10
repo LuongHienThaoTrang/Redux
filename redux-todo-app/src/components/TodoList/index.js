@@ -5,7 +5,8 @@ import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 // import { addTodo } from '../../redux/actions'
 import { todosRemainingSelector } from './../../redux/selectors';
-import todoListSlice from './TodosSlice'
+// import { addTodos, addNewTodo } from './TodosSlice';
+import todoListSlice, { addNewTodo } from './TodosSlice'
 
 function TodoList() {
   const [name, setName] = useState('')
@@ -21,6 +22,7 @@ function TodoList() {
   const handleAddButtonClick = () => {
     // Nếu input '' thì không dispatch
     if(!(name === '')) {
+    // Cách 1: Viết Redux Core 
     //   dispatch(addTodo({
     //     id: uuidv4(),
     //     name: name,
@@ -34,18 +36,40 @@ function TodoList() {
     // }
 
     // Cách 2: Viết Redux Toolkit
-      dispatch(todoListSlice.actions.addTodo({
-        id: uuidv4(),
-        name: name,
-        prioriry: prioriry,
-        completed: false
-      }))
-      // Clear input, focus
-      setName('')
-      setPrioriry('Medium')
-      inputRef.current.focus()
-    }
+    //   dispatch(todoListSlice.actions.addTodo({
+    //     id: uuidv4(),
+    //     name: name,
+    //     prioriry: prioriry,
+    //     completed: false
+    //   }))
+    //   // Clear input, focus
+    //   setName('')
+    //   setPrioriry('Medium')
+    //   inputRef.current.focus()
+    // }
+
+    // Cách 3: Viết Redux Thunk
+    // dispatch 1 thunk action creators
+    // dispatch(addTodos({
+    //       id: uuidv4(),
+    //       name: name,
+    //       prioriry: prioriry,
+    //       completed: false
+    //     }
+    //   ))
+
+    // Cách 3: Viết Dispatch Thunk Action creators để nó post lên api và thêm mới todo vào db
+    dispatch(addNewTodo({
+      id: uuidv4(),
+      name: name,
+      prioriry: prioriry,
+      completed: false
+    }))
+    setName('')
+    setPrioriry('Medium')
+    inputRef.current.focus()
   }
+}
 
   return (
     <Row style={{ height: 'calc(100% - 40px)' }}>

@@ -1,5 +1,5 @@
 
-
+// Cách 1: Viết Redux Core
 export const addTodo = payload => ({
     type: 'todoList/addTodo',
     payload
