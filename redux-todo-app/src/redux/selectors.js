@@ -1,4 +1,8 @@
-import { createSelector } from 'reselect'
+// Cách 1: Viết Redux Core
+// import { createSelector } from 'reselect'
+
+// Cách 2: Viết Redux Toolkit
+import { createSelector } from '@reduxjs/toolkit'
 
 // Lấy ra state
 export const todoListSelector = state => state.todoList
@@ -13,6 +17,8 @@ export const todosRemainingSelector = createSelector(
     statusFilterSelector,
     prioriryFilterSelector,
     // Tham số trong callback: todoList === state.todoList, searchText === state.filters.search
+
+    //**** Khi viết redux toolkit: thì những giá trị tham số trong callback nếu có sự thay đổi mới bị tính toán lại như react hook
     (todoList, searchText, statusFilter, prioriryFilter) => {
         
         // Dữ liệu của status có 3 giá trị: 'All', 'Completed', 'Todo'
@@ -23,7 +29,6 @@ export const todosRemainingSelector = createSelector(
                 // Lúc đầu prioriryFilter là [] nên nó sẽ chạy đk 2
                 // Nếu có phần tử thì chạy đk đầu
                 // Dùng includes thì phân tử nào lớn sẽ gọi đến includes
-                console.log(prioriryFilter.length > 0);
                 return prioriryFilter.length > 0 
                     ? todo.name.includes(searchText) && prioriryFilter.includes(todo.prioriry) //todo.prioriry có nằm trong danh sách mảng đó k có thì trả về
                     : todo.name.includes(searchText)

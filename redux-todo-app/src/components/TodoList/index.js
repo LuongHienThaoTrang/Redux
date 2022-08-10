@@ -3,8 +3,9 @@ import Todo from '../Todo';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from '../../redux/actions'
+// import { addTodo } from '../../redux/actions'
 import { todosRemainingSelector } from './../../redux/selectors';
+import todoListSlice from './TodosSlice'
 
 function TodoList() {
   const [name, setName] = useState('')
@@ -20,7 +21,20 @@ function TodoList() {
   const handleAddButtonClick = () => {
     // Nếu input '' thì không dispatch
     if(!(name === '')) {
-      dispatch(addTodo({
+    //   dispatch(addTodo({
+    //     id: uuidv4(),
+    //     name: name,
+    //     prioriry: prioriry,
+    //     completed: false
+    //   }))
+    //   // Clear input, focus
+    //   setName('')
+    //   setPrioriry('Medium')
+    //   inputRef.current.focus()
+    // }
+
+    // Cách 2: Viết Redux Toolkit
+      dispatch(todoListSlice.actions.addTodo({
         id: uuidv4(),
         name: name,
         prioriry: prioriry,

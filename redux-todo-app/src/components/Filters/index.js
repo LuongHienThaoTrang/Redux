@@ -1,7 +1,8 @@
 import { Col, Row, Input, Typography, Radio, Select, Tag } from 'antd';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux'
-import { searchFilterChange, statusFilterChange, prioriryFilterChange } from '../../redux/actions';
+// import { searchFilterChange, statusFilterChange, prioriryFilterChange } from '../../redux/actions';
+import filtersSlice from './FiltersSlice';
 
 const { Search } = Input;
 
@@ -11,23 +12,25 @@ export default function Filters() {
   const [filterPrioriry, setFilterPrioriry] = useState([])
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    console.log(filterPrioriry);
-  }, [filterPrioriry])
-
   const handleSearchTextChange = e => {
     setSearchText(e.target.value)
-    dispatch(searchFilterChange(e.target.value))
+    // dispatch(searchFilterChange(e.target.value))
+    // Cách 2: Viết Redux Toolkit
+    dispatch(filtersSlice.actions.searchFilterChange(e.target.value))
   }
 
   const handleStatusChange = e => {
     setFilterStatus(e.target.value);
-    dispatch(statusFilterChange(e.target.value))
+    // dispatch(statusFilterChange(e.target.value))
+    // Cách 2: Viết Redux Toolkit
+    dispatch(filtersSlice.actions.statusFilterChange(e.target.value))
   }
 
   const handlePrioriryChange = e => {
     setFilterPrioriry(e);
-    dispatch(prioriryFilterChange(e));
+    // dispatch(prioriryFilterChange(e));
+    // Cách 2: Viết Redux Toolkit
+    dispatch(filtersSlice.actions.prioriryFilterChange(e));
   }
 
   return (
